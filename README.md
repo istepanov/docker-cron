@@ -1,5 +1,11 @@
 istepanov/cron
-======================
+==============
+
+[![Docker Stars](https://img.shields.io/docker/stars/istepanov/cron.svg)](https://hub.docker.com/r/istepanov/cron/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/istepanov/cron.svg)](https://hub.docker.com/r/istepanov/cron/)
+[![Docker Build](https://img.shields.io/docker/automated/istepanov/cron.svg)](https://hub.docker.com/r/istepanov/cron/)
+[![Layers](https://images.microbadger.com/badges/image/istepanov/cron.svg)](https://microbadger.com/images/istepanov/cron)
+[![Version](https://images.microbadger.com/badges/version/istepanov/cron.svg)](https://microbadger.com/images/istepanov/cron)
 
 Docker image that runs cron that periodically executes `command.sh` script. Use this a base image for your periodic task containers.
 
