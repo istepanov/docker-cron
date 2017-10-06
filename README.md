@@ -7,18 +7,33 @@ istepanov/cron
 [![Layers](https://images.microbadger.com/badges/image/istepanov/cron.svg)](https://microbadger.com/images/istepanov/cron)
 [![Version](https://images.microbadger.com/badges/version/istepanov/cron.svg)](https://microbadger.com/images/istepanov/cron)
 
-Docker image that runs cron that periodically executes `command.sh` script. Use this a base image for your periodic task containers.
+Docker image that runs cron that periodically executes bash script.
 
 ### Usage
 
-    docker run -d [docker option like env vars, etc.] your_image_based_on_this_image [no-cron]
+    docker run [-d] [-e 'CRON_SCHEDULE=...'] istepanov/cron [no-cron] command
 
 ### Base image parameters
 
 * `-e 'CRON_SCHEDULE=0 1 * * *'`: specifies when cron job starts ([details](http://en.wikipedia.org/wiki/Cron)). Default is `0 1 * * *` (runs every day at 1:00 am).
-* `no-cron`: if specified, run container once and exit (no cron scheduling). Good for testing `command.sh`.
+* `no-cron`: if specified, run container once and exit (no cron scheduling).
+* `command`: the actual command that will be run by cron job.
 
 ### Example
+
+Print 'Hello World!' every minute:
+
+    docker run -e 'CRON_SCHEDULE=* * * * *' istepanov/cron echo 'Hello World!'
+
+Do it in the background:
+
+    docker run -d -e 'CRON_SCHEDULE=* * * * *' istepanov/cron echo 'Hello World!'
+
+Run immediately once:
+
+    docker run -e 'CRON_SCHEDULE=* * * * *' istepanov/cron no-cron echo 'Hello World!'
+
+### Advanced example - build your own image based on this image
 
 Let's build an image that will run Docker-flavored `cowsay` periodically.
 
@@ -35,9 +50,7 @@ Let's build an image that will run Docker-flavored `cowsay` periodically.
 
 `command.sh`
 
-    #!/bin/sh
-
-    set -e
+    #!/bin/bash
 
     cowsay "$COW_SPEECH"
 
@@ -47,13 +60,9 @@ Build the image:
 
 Run the image in background:
 
-    docker run -d -e 'CRON_SCHEDULE=* * * * *' -e COW_SPEECH='Hello World!' --name cowsay-container cowsay
+    docker run -e 'CRON_SCHEDULE=* * * * *' -e COW_SPEECH='Hello World!' cowsay
 
-Get the output:
-
-    docker logs cowsay-container
-
-    # output:
+Output:
 
     Job started: Fri Oct  6 04:48:00 UTC 2017
 
