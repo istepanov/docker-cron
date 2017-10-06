@@ -1,6 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
-# PUR YOUR CODE HERE
-echo "Hello World!"
+eval $COMMAND
