@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:latest
 
 MAINTAINER Ilya Stepanov <dev@ilyastepanov.com>
 
@@ -11,6 +11,8 @@ RUN chmod +x /entrypoint.sh && \
 
 ONBUILD ADD command.sh /command.sh
 ONBUILD RUN chmod +x /command.sh
+
+ENV CRON_SCHEDULE '0 1 * * *'
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD [""]
